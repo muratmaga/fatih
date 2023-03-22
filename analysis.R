@@ -1,3 +1,6 @@
+## HGS variables indicate to "Handgrip Strength" which was measured by electronic hand dynamometer in Kg-f
+## DGT variables indicate to "2D:4D Digit Ratios" which were calculated from finger length measurements that are collected previously via digital caliper (0.05mm accuracy) in milimeters.
+
 library(geomorph)
 setwd("C:/Users/murat/Desktop/Fatih/")
 
