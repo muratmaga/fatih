@@ -4,6 +4,20 @@
 library(geomorph)
 setwd("C:/Users/murat/Desktop/Fatih/")
 
+semi.lms = c(45, 46, 47,
+49, 50, 51,
+36, 37, 38,
+40, 41, 42,
+33, 34,
+30, 31,
+63, 64, 65, 66, 67, 68, 69, 70,
+53, 54, 55, 56, 57, 58, 59, 60)
+
+fixed.lms = seq(1, 70, 1)[-semi.lms]
+
+left = c(52:60, 20, 21, 22, 26, 33, 27, 34, 35, 4, 15, 12, 11, 13, 14, 5, 44, 45, 46, 47, 48, 49, 50, 51)
+right = c(62:70, 18, 17, 16, 24, 30, 23, 31, 32, 3, 8, 7, 6, 10, 9, 2, 39, 38, 37, 36, 43, 42, 41, 40)
+
 maletps <- readland.tps("data/alignedmale.tps")
 gpa_male <- gpagen(maletps)
 
