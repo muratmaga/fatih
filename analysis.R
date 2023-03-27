@@ -15,15 +15,31 @@ semi.lms = c(45, 46, 47,
 
 fixed.lms = seq(1, 70, 1)[-semi.lms]
 
+sliders =read.table("slider.nts", skip=2, header=F, sep=" ")
+colnames(sliders) = c("before", "slide", "after")
+
+
 left = c(52:60, 20, 21, 22, 26, 33, 27, 34, 35, 4, 15, 12, 11, 13, 14, 5, 44, 45, 46, 47, 48, 49, 50, 51)
 right = c(62:70, 18, 17, 16, 24, 30, 23, 31, 32, 3, 8, 7, 6, 10, 9, 2, 39, 38, 37, 36, 43, 42, 41, 40)
 
-maletps <- readland.tps("data/alignedmale.tps")
-gpa_male <- gpagen(maletps)
+maletps <- readland.tps("latestmale72.tps", specID="ID")
+gpa_male <- gpagen(maletps, curves = sliders, PrinAxes = FALSE)
+male.symm <- bilat.symmetry(gpa_male$coords, 
+                            ind = unlist(dimnames(maletps)[3]),
+                            replicate = rep(1, dim(maletps)[3]),
+                            land.pairs = cbind(left, right),
+                            object.sym = TRUE)
 
 
-femaletps <- readland.tps("data/alignedfemale.tps")
-gpa_female <- gpagen(femaletps)
+femaletps <- readland.tps("latestfemale55.tps", specID = "ID")
+gpa_female <- gpagen(femaletps, curves = sliders, PrinAxes = FALSE)
+female.symm <- bilat.symmetry(gpa_female$coords, 
+                            ind = unlist(dimnames(femaletps)[3]),
+                            replicate = rep(1, dim(femaletps)[3]),
+                            land.pairs = cbind(left, right),
+                            object.sym = TRUE)
+
+
 
 ##generating variables
 
