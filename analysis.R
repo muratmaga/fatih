@@ -39,7 +39,15 @@ female.symm <- bilat.symmetry(gpa_female$coords,
                             land.pairs = cbind(left, right),
                             object.sym = TRUE)
 
+#creating centroid size
 
+cs.female <- centroid.size(gpa_female$coords)
+cs.male <- centroid.size(gpa_male$coords)
+
+#regression with centroid size
+
+cs <- procD.lm(male$coords.coords ~ cs.male + malehgs + maledgt)
+summary(cs)
 
 ##generating variables
 
