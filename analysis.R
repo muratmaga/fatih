@@ -60,12 +60,50 @@ male.gdf = geomorph.data.frame(Size = gpa_male$Csize,
                                DGT = male_dgt)
 
 
+<<<<<<< HEAD
+#regression without the centroid size. We are not including CS due to technical problem in correctly scaling images.
+model1 <- procD.lm(Coords ~ HGS + DGT, data = male.gdf )
+
+# since only the HGS term was significant, we use the reduced model to visualize the shape effect
+model2 <- procD.lm(Coords ~ HGS, data = male.gdf )
+
+summary(model2)
+
+m = gpa_male$consensus
+m1 = m + matrix(model2$coefficients[1,], nrow = 70, byrow = TRUE)
+
+# plot the shape effect of HGS from the model2. 
+# first plot the mean shape (black) and add the coefficients (red), draw lines connecting them (blue)
+plot(m1, pch=32, xlim=range(m1), ylim=range(m1), asp=1)
+points(m, pch=20)
+points(m1, col='red', pch=20)
+for (i in 1:70) segments(x0=m[i,1], y0=m[i,2], x1=m1[i,1], y1=m1[i,2], col="cyan")
+# or visualize the deformation grid.
+plotRefToTarget(m, m1)
+
+## FA Score calculation
+# simple function to convert the FA_component reported to procrutes distances
+# calculate procrustes residuals by subtracting FA.component from the asymmetric shape
+D = male.symm$asymm.shape - male.symm$FA.component
+
+# procrustes distance = sum of squared distances for corresponding landmarks 
+
+PD = function(X) {
+  return(sum(rowSums(X^2)))
+}
+  
+FA_scores = NULL
+for (i in 1:72) FA_scores[i] = PD(D[,,i])
+
+summary(procD.lm(FA_scores~ gpa_male$Csize * male_dgt * male_hgs))
+=======
 #regression with centroid size
 
 model1 <- procD.lm(Coords ~ Size + HGS + DGT, data = male.gdf )
 #model1 <- procD.lm(male$coords.coords ~ cs.male + malehgs + maledgt)
 
 summary(model1)
+>>>>>>> 4dabaa48997ca9e83b5181ebd5d6abebdd5b3cae
 
 
 # generating a "random" variable
