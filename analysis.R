@@ -144,3 +144,62 @@ fitrandommale_rs <- procD.lm(RS_MaleRandom$RegScore ~ random)
 summary(fitrandommale_rs)
 
 # Significant Results With 0.024 p value
+
+
+
+### Conducting multi-regression for both variables in males and females
+
+fem_multireg <- procD.lm(Coords ~ HGS + DGT, data = femalesym.gdf)
+
+summary(fem_multireg)
+
+#          Df       SS        MS     Rsq      F        Z Pr(>F)
+#HGS        1 0.001928 0.0019284 0.01623 0.8669 -0.05423  0.523
+#DGT        1 0.001183 0.0011835 0.00996 0.5320 -1.17329  0.879
+#Residuals 52 0.115674 0.0022245 0.97380                       
+#Total     54 0.118786                                         
+
+male_multireg <- procD.lm(Coords ~ HGS + DGT, data = malesym.gdf)
+
+summary(male_multireg)
+
+#          Df       SS        MS     Rsq      F       Z Pr(>F)  
+#HGS        1 0.005792 0.0057924 0.02909 2.0795  1.7805  0.042 *
+#DGT        1 0.001152 0.0011524 0.00579 0.4137 -1.6525  0.945  
+#Residuals 69 0.192199 0.0027855 0.96513                        
+#Total     71 0.199144                  
+
+
+## Calculating angle of coefficients to see the effect of direction of variables in males
+
+library(Morpho)
+
+male_hgs_reg <- procD.lm(Coords ~ HGS, data = malesym.gdf)
+male_dgt_reg <- procD.lm(Coords ~ DGT, data = malesym.gdf)
+
+male_angle_rad <- angle.calc(male_hgs_reg$coefficients, male_dgt_reg$coefficients)
+
+#Turning radians into degrees
+
+library(units)
+
+male_angle_rad <- as_units(male_angle_rad, "radians")
+male_angle_deg <- set_units(male_angle_rad, "degrees")
+print(male_angle_deg)
+
+#12.306 [°] degrees
+
+fem_hgs_reg <- procD.lm(Coords ~ HGS, data = femalesym.gdf)
+fem_dgt_reg <- procD.lm(Coords ~ DGT, data = femalesym.gdf)
+
+fem_angle_rad <- angle.calc(fem_hgs_reg$coefficients, fem_dgt_reg$coefficients)
+
+fem_angle_rad <- as_units(fem_angle_rad, "radians")
+fem_angle_deg <- set_units(fem_angle_rad, "degrees")
+
+print(fem_angle_deg)
+
+#12.77671 [°] degrees
+
+
+
